@@ -1,20 +1,24 @@
 import { prisma } from "@/lib/prisma"
 import ImageGrid from "@/components/ImageGrid"
 import { getImageUrl } from "@/lib/image-utils"
+import { notFound } from "next/navigation"
+import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
-async function getImages() {
+async function getImagesByGroup(group: string) {
   try {
+    const decodedGroup = decodeURIComponent(group)
+    
     const images = await prisma.work.findMany({
       where: {
-        isFeatured: true,
+        groupName: decodedGroup,
+        isHidden: false,
         parentId: null  // Exclude child images - they only appear in Related section
       },
       orderBy: {
         dateAdded: "desc"
       },
-      take: 4,
       select: {
         id: true,
         name: true,
@@ -29,37 +33,41 @@ async function getImages() {
     // Prefix image URLs with base URL
     return images.map(image => ({
       ...image,
-      workId: image.id, // Keep workId for backward compatibility in components
+      workId: image.id,
       workName: image.name,
       file: getImageUrl(image.file),
       thumbFile: getImageUrl(image.thumbFile)
     }))
   } catch (error) {
-    console.error("Error fetching images:", error)
+    console.error("Error fetching images by group:", error)
     return []
   }
 }
 
-export default async function HomePage() {
-  const images = await getImages()
+export default async function GroupGalleryPage({
+  params
+}: {
+  params: { group: string }
+}) {
+  const images = await getImagesByGroup(params.group)
+  const decodedGroup = decodeURIComponent(params.group)
+
+  if (images.length === 0) {
+    notFound()
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Image Gallery
+            {decodedGroup}
           </h1>
         </div>
 
-        {images.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No images available yet.</p>
-          </div>
-        ) : (
-          <ImageGrid images={images} />
-        )}
+        <ImageGrid images={images} />
       </div>
     </div>
   )
 }
+

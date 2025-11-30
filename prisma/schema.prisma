@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Asset {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @map("created") @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated") @db.DateTime(0)
+  title       String   @db.VarChar(255)
+  url         String   @db.VarChar(512)
+  type        String   @db.VarChar(100)
+  description String?  @db.VarChar(512)
+
+  @@index([createdAt], map: "idx_created")
+  @@index([type], map: "idx_type")
+  @@map("assets")
+}
+
+model Work {
+  // Primary key
+  id           Int       @id @default(autoincrement())
+  
+  // Basic info
+  name         String?   @db.VarChar(255)
+  
+  // File paths
+  file         String?   @db.VarChar(512)
+  thumbFile    String?   @map("thumb_file") @db.VarChar(512)
+  
+  // Dates
+  dateAdded    DateTime  @default(now()) @map("date_added") @db.DateTime(0)
+  dateCreated  DateTime? @map("date_created") @db.DateTime(0)
+  
+  // Artwork details
+  medium       String?   @db.VarChar(128)
+  dimensions   String?   @db.VarChar(128)
+  
+  // File metadata
+  filetype     String?   @db.VarChar(32)
+  fileSize     Int?      @map("file_size")
+  
+  // Status flags
+  isHidden     Boolean   @default(false) @map("is_hidden")
+  isFeatured   Boolean   @default(false) @map("is_featured")
+  isAvailable  Boolean   @default(true) @map("is_available")
+  
+  // Categorization
+  groupName    String?   @map("group_name") @db.VarChar(128)
+  
+  // Self-referential relationship
+  parentId     Int?      @map("parent_id")
+  parent       Work?     @relation("WorkHierarchy", fields: [parentId], references: [id], onDelete: SetNull, map: "fk_work_parent")
+  children     Work[]    @relation("WorkHierarchy")
+  
+  // Optimized indexes
+  @@index([dateAdded], map: "idx_date_added")
+  @@index([dateCreated], map: "idx_date_created")
+  @@index([groupName], map: "idx_group_name")
+  @@index([isHidden, isFeatured], map: "idx_visibility")
+  @@index([isHidden, dateAdded], map: "idx_hidden_date")
+  @@index([parentId], map: "idx_parent")
+  
+  @@map("work")
+}
