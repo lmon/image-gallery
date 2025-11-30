@@ -4,6 +4,8 @@ import NavigationWrapper from "@/components/NavigationWrapper"
 import GroupNavWrapper from "@/components/GroupNavWrapper"
 import SessionProvider from "@/components/SessionProvider"
 
+/* this is a comment */
+
 export const metadata: Metadata = {
   title: "Image Gallery",
   description: "A modern image gallery with admin management"
