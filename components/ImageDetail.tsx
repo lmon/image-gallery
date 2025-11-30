@@ -10,7 +10,7 @@ interface ImageDetailProps {
     workName: string | null
     file: string | null
     dimensions: string | null
-    dateCreated: Date
+    dateCreated: Date | null
     medium: string | null
   }
   relatedImages?: Array<{
@@ -84,10 +84,12 @@ export default function ImageDetail({
               </div>
             )}
 
-            <div>
-              <h3 className="font-semibold text-gray-900">Date Created</h3>
-              <p>{new Date(image.dateCreated).toLocaleDateString()}</p>
-            </div>
+            {image.dateCreated && (
+              <div>
+                <h3 className="font-semibold text-gray-900">Date Created</h3>
+                <p>{new Date(image.dateCreated).toLocaleDateString()}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
