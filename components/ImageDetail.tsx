@@ -27,6 +27,8 @@ interface ImageDetailProps {
   }>
 }
 
+/* this is a comment */
+
 export default function ImageDetail({
   image,
   relatedImages = [],
