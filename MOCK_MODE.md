@@ -157,3 +157,4 @@ lsof -ti:3000 | xargs kill -9
 - Mock mode uses Unsplash URLs - requires internet connection
 - Check browser console for errors
 
+
