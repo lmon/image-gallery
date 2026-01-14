@@ -2,13 +2,11 @@
 
 import { signIn } from "next-auth/react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,8 +22,8 @@ export default function LoginPage() {
       setError("Invalid password")
       setLoading(false)
     } else if (result?.ok) {
-      router.push("/admin")
-      router.refresh()
+      // Use window.location for a full page reload to let middleware re-evaluate auth
+      window.location.href = "/admin"
     }
   }
 
