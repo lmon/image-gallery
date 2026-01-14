@@ -1,5 +1,4 @@
-// import { requireAuth } from "@/lib/auth-utils"
-// import { redirect } from "next/navigation"
+import { requireAuth } from "@/lib/auth-utils"
 import AdminNav from "@/components/admin/AdminNav"
 
 export default async function AdminLayout({
@@ -7,6 +6,9 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Require authentication before rendering admin pages
+  await requireAuth()
+  
   return (
     <div className="min-h-screen bg-gray-100">
       <AdminNav />
