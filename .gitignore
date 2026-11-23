@@ -50,3 +50,7 @@ prisma/migrations/
 
 # editor settings (sftp.json has host/user details)
 .vscode/
+
+# vim swap files (can contain unsaved secrets)
+*.swp
+*.swo
