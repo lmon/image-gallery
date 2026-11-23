@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 
 interface ImageFormProps {
@@ -60,7 +60,7 @@ export default function ImageForm({
         file: data.file,
         thumbFile: data.thumbFile
       }))
-    } catch (error) {
+    } catch {
       alert("Failed to upload image")
     } finally {
       setUploading(false)

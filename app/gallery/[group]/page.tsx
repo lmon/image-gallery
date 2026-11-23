@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma"
 import ImageGrid from "@/components/ImageGrid"
 import { getImageUrl } from "@/lib/image-utils"
 import { notFound } from "next/navigation"
-import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 

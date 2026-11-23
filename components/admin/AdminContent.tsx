@@ -112,7 +112,7 @@ export default function AdminContent() {
       await fetchImages()
       setShowForm(false)
       alert("Image created successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to create image")
     }
   }
@@ -130,7 +130,7 @@ export default function AdminContent() {
       await fetchImages()
       setEditingImage(null)
       alert("Image updated successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to update image")
     }
   }
@@ -147,7 +147,7 @@ export default function AdminContent() {
 
       await fetchImages()
       alert("Image deleted successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to delete image")
     }
   }
@@ -165,7 +165,7 @@ export default function AdminContent() {
       await fetchAssets()
       setShowForm(false)
       alert("Asset created successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to create asset")
     }
   }
@@ -183,7 +183,7 @@ export default function AdminContent() {
       await fetchAssets()
       setEditingAsset(null)
       alert("Asset updated successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to update asset")
     }
   }
@@ -200,7 +200,7 @@ export default function AdminContent() {
 
       await fetchAssets()
       alert("Asset deleted successfully!")
-    } catch (error) {
+    } catch {
       alert("Failed to delete asset")
     }
   }

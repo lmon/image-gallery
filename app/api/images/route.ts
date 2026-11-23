@@ -64,13 +64,11 @@ export async function POST(request: NextRequest) {
       filetype,
       filesize,
       dimensions,
-      comments,
       thumbFile,
       isHidden,
       parent,
       isADefault,
       isAvailable,
-      inTheHandsOf,
       group
     } = body
 
