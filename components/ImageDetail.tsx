@@ -181,8 +181,7 @@ export default function ImageDetail({
               alt={image.workName || "Untitled"}
               fill
               className="object-contain"
-              sizes="99vw"
-              quality={100}
+              sizes="100vw"
             />
           </div>
         </div>

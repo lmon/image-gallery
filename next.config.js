@@ -5,10 +5,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.lucasmonaco.com',
+        pathname: '/gallery/**',
       },
       {
         protocol: 'https',
         hostname: 'lucasmonaco.com',
+        pathname: '/gallery/**',
       },
       {
         protocol: 'https',
@@ -20,9 +22,15 @@ const nextConfig = {
       }
     ],
     unoptimized: false,
-    formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Gallery images rarely change, so cache transformed images for a year.
+    // The origin sends no Cache-Control, so without this they expire hourly
+    // and every re-request after that counts as a new transformation.
+    minimumCacheTTL: 31536000,
+    // One format only: each format is transformed and cached separately.
+    formats: ['image/webp'],
+    // Fewer widths means fewer distinct variants per image.
+    deviceSizes: [640, 828, 1200, 1920],
+    imageSizes: [64, 128, 256, 384],
   },
 }
 
