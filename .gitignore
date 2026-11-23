@@ -47,3 +47,6 @@ prisma/migrations/
 # uploads
 /public/gallery/art/*
 !/public/gallery/art/.gitkeep
+
+# editor settings (sftp.json has host/user details)
+.vscode/
