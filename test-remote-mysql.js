@@ -1,11 +1,20 @@
 const mysql = require('mysql2/promise');
 
+// Reads the connection string from the environment so no credentials live in the repo.
+// Usage: DATABASE_URL="mysql://user:pass@host:3306/db" node test-remote-mysql.js
+//    or: node --env-file=.env.local test-remote-mysql.js
+if (!process.env.DATABASE_URL) {
+  console.error('DATABASE_URL is not set.');
+  process.exit(1);
+}
+
+const url = new URL(process.env.DATABASE_URL);
 const config = {
-  host: '208.76.86.152',
-  port: 3306,
-  user: 'owurkamu_webuser',
-  password: 'webuser',
-  database: 'owurkamu_simpleImages',
+  host: url.hostname,
+  port: Number(url.port) || 3306,
+  user: decodeURIComponent(url.username),
+  password: decodeURIComponent(url.password),
+  database: url.pathname.slice(1),
 };
 
 console.log('Testing MySQL connection...');
